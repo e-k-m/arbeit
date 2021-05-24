@@ -1,0 +1,26 @@
+name: main
+on: [push]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install deps
+        run: |
+          npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Lint
+        run: |
+          npm run fmt:check
+      - name: Test
+        run: |
+          npm run build && npm run test

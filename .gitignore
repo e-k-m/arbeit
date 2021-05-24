@@ -1,0 +1,7 @@
+.idea
+.vsode
+coverage
+dist
+docs
+node_modules
+"~/.npm"
